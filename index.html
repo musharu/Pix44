@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="機械情報計測講座2026卒・卒業作品による画素投稿WEBサイトです。画素を投稿しましょう。Created By Musharu">
+  <meta name="author" content="musharu">
+  <meta name="robots" content>
+  <meta property="og:title" content="画素x44（Pix44）｜機械情報計測講座2026卒">
+  <meta property="og:description" content="機械情報計測講座2026卒・卒業作品による画素投稿WEBサイトです。画素を投稿しましょう。Created By Musharu">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="画素x44">
+  <meta property="og:locale" content="ja_JP">
+  <title>画素x44（Pix44）｜機械情報計測講座2026卒</title>
+  <link rel="icon" type="image/png" href="image/ico64.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+
+  <header class="site-header">
+    <img src="image/logo_v2.svg" alt="logo" class="site-logo">
+  </header>
+
+  <div class="site-title">
+    <img src="image/title.svg" alt="画素x44">
+  </div>
+
+
+  <!-- ===== 編集画面 ===== -->
+  <section id="editView">
+    <div class="editor-layout">
+
+      <!-- 左：グリッド -->
+      <div class="grid" id="grid"></div>
+
+      <!-- 右：操作パネル -->
+      <div class="controls">
+
+        <div class="controls-color">
+          <p class="controls-title">色を選択してね</p>
+          <div>
+            <input type="color" id="colorPicker" value="#ff6666">
+            <p>（←枠をクリック or タップ）</p>
+          </div>
+          <div class="controls-log">
+            <p>色彩履歴</p>
+            <div class="color-history" id="colorHistory">
+              <!-- JSで正方形色彩履歴を追加 -->
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <p class="controls-title">タイトルを決めてね<small>（8文字以内）</small></p>
+          <p class="error-message" id="titleError">タイトルを入力してください</p>
+          <input type="text" placeholder="（ここに入力してください）" id="titleInput" autocomplete="off" minlength="1" maxlength="8" required>
+        </div>
+
+        <div>
+          <p class="controls-name">ニックネームを入れてね<small>（8文字以内）</small></p>
+          <input type="text" placeholder="（任意）" id="nameInput" autocomplete="off" minlength="1" maxlength="8">
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 提出ボタン ===== -->
+  <div id="submit">
+    <button id="confirmButton" type="button">
+      <img src="image/send_btn.svg" alt="" class="button-icon">
+      <span>投稿<small>する</small></span>
+    </button>
+  </div>
+
+
+  <!-- ===== オーバーレイ ===== -->
+  <div id="overlay" class="hidden">
+    <div id="confirmView">
+      <h2>最終確認</h2>
+      <div class="grid" id="previewGrid"></div>
+      <div>
+        <div class="title">
+          <p>Title</p><span id="previewTitle"></span>
+        </div>
+        <div class="name">
+          <p>Name</p><span id="previewName"></span>
+        </div>
+      </div>
+      <div id="btns">
+        <button id="backButton" type="button">戻る</button>
+        <button id="submitButton" type="button">投稿<small>する</small></button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ===== 過去投稿 ===== -->
+  <div class="history-bg">
+    <div class="history">
+      <p class="history-title">過去の投稿</p>
+      <div id="historyList" class="history-list"></div>  
+    </div>  
+  </div>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>

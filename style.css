@@ -1,0 +1,620 @@
+:root {
+  --grid-size: clamp(80px, 15vw, 102px);
+}
+
+* {
+  /* outline: 1px solid red; */
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+h1, h2, p {
+  color: #222;
+  font-weight: 250;
+}
+
+
+/* -------------------------- */
+/* ヘッダー */
+/* -------------------------- */
+.site-header {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #fff;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.site-logo {
+  /* height: 60px; */
+  height: clamp(20px, 15vw, 60px);
+
+  width: auto;
+}
+
+
+/* -------------------------- */
+/* タイトル */
+/* -------------------------- */
+.site-title {
+  margin: 0;
+  text-align: center;
+  margin: 70px 0 50px;
+}
+
+.site-title img {
+  display: inline-block;
+  width: clamp(100px, 55vw, 360px);
+  height: auto;
+}
+
+
+
+
+
+#editView {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+#submit {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  padding-block: 60px;
+}
+
+.editor-layout {
+  display: flex;
+  gap: 40px 60px;
+}
+
+.editor-layout > .grid, .editor-layout > .controls {
+  flex: 1;
+}
+
+
+
+
+/* -------------------------- */
+/* 最終投稿確認画面 */
+/* -------------------------- */
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* 半透明グレー */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+#overlay.hidden {
+  display: none;
+}
+
+
+
+
+#confirmView {
+  background: #fff;
+  padding: 20px 80px 20px;
+  border-radius: 8px;
+  min-width: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
+  display: flex;
+  gap: 20px;
+}
+
+
+.title, .name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.title p, .name p {
+  width: 50px;
+  margin: 0;
+  text-align: left;
+}
+
+#previewTitle, #previewName {
+  /* text-align: center; */
+  font-weight: 600;
+  color: #448cff;
+}
+
+#previewTitle::before, #previewName::before {
+  content: '｜';
+  color: #222;
+  padding: 10px;
+}
+
+
+#confirmView h2 {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+
+
+#confirmView button {
+  min-width: 140px;
+  padding: 0.7rem 1.2rem;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#confirmView #btns {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+#confirmView #btns button {
+  flex: 1;
+}
+
+#backButton {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+}
+
+#backButton:hover {
+  background: #e0e0e0;
+}
+
+#submitButton {
+  background: linear-gradient(135deg, #7daaf3, #0662ad);
+  color: #fff;
+  border: none;
+  box-shadow: 0 6px 16px rgba(13, 46, 119, 0.3);
+}
+
+#submitButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(13, 46, 119, 0.3);
+}
+
+
+/* 提出した後、くすませる　*/
+#submitButton.is-submitting, #backButton.is-submitting {
+  background: #ccc;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+#submitButton:disabled, #backButton:disabled {
+  pointer-events: none;
+}
+
+
+
+
+
+
+
+/*  */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, var(--grid-size));
+  grid-template-rows: repeat(4, var(--grid-size));
+  gap: 3px;
+}
+
+.cell {
+  width: var(--grid-size);
+  height: var(--grid-size);
+  background: #ffffff;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+#previewGrid {
+  grid-template-columns: repeat(4, 50px);
+  grid-template-rows: repeat(4, 50px);
+}
+
+#previewGrid .cell {
+  width: 50px;
+  height: 50px;
+}
+
+
+/* グリッド左の設定（タイトル入力欄＋色選択欄） */
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.controls-title, 
+.controls-name {
+  position: relative;
+  font-size: 1.3rem;
+  padding-bottom: 0.5rem;
+  font-weight: 200;
+}
+
+
+.controls-title::before, 
+.controls-name:before {
+  content: '|';
+  position: absolute;
+  left: -1.4rem;
+}
+
+.controls-title small,
+.controls-name small {
+  padding-left: 0.5rem;
+}
+
+.controls-log {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.controls-log p,
+.controls-log .color-history {
+  margin: 0;
+  width: 100%;
+}
+
+
+
+input[type="color"] {
+  width: 5rem;
+  height: 3rem;
+  padding: 0;
+  background-color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+
+
+/* テキスト入力 */
+#titleInput, 
+#nameInput {
+  /* width: 15rem; */
+  width: 100%;
+  height: 3rem;
+  padding: 0 0.75rem; 
+  background-color: #fff;
+  border: 1px solid #333;
+  font-size: 1.3rem;
+  border-radius: 4px;
+  border-color: #999;
+}
+
+#titleInput:focus,
+#nameInput:focus {
+  outline: none;
+  border-color: #448cff;
+  box-shadow: 0 0 0 3px rgba(1, 54, 138, 0.286);
+}
+
+#titleInput::placeholder,
+#nameInput::placeholder {
+  color: #aaa;
+  font-size: 1rem;
+}
+
+.error-message {
+  color: #fc7575;
+  font-size: 0.9rem;
+  margin-bottom: 0.2rem;
+  display: none;
+}
+
+
+
+
+
+.controls-color > div {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+
+.color-history {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: #eee;
+  border-radius: 4px;
+  min-height: 48px;
+}
+
+.color-history .color-item {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+
+
+/* -------------------------- */
+/* 投稿ボタン */
+/* -------------------------- */
+#confirmButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+
+  padding: 10px 46px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+
+  background: linear-gradient(135deg, #7daaf3, #0662ad);
+  border: none;
+  border-radius: 9999px;
+
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(13, 46, 119, 0.3);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+#confirmButton:hover {
+  opacity: 0.9;
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.4);
+  transform: translateY(-1px);
+}
+
+#confirmButton:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 6px rgba(37, 99, 235, 0.3);
+}
+
+#confirmButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
+}
+
+#confirmButton .button-icon {
+  width: 2rem;
+  height: 2rem;
+  display: block;
+}
+
+#confirmButton .button-icon {
+  filter: brightness(0) invert(1);
+}
+
+
+
+
+/* -------------------------- */
+/* 過去投稿 */
+/* -------------------------- */
+.history-title {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  letter-spacing: 0.07em;
+}
+
+
+.history-bg {
+  padding: 56px 0;
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #f4f5f7 20%,
+    #f4f5f7 80%,
+    #ffffff 100%
+  );
+}
+
+
+.history {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-inline: 10px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+/* 小さな4x4グリッド */
+.history-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 16px);
+  grid-template-rows: repeat(4, 16px);
+  gap: 1px;
+  margin-bottom: 4px;
+}
+
+/* ピクセル */
+.history-cell {
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 2px;
+}
+
+
+.history-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1.5rem;
+  justify-items: center;
+}
+
+
+.history-item {
+  perspective: 1000px;
+}
+.history-card {
+  position: relative;
+  height: 150px;
+  width: 150px;
+
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+
+  background-color: #fff;
+  padding: 16px 18px;
+  border-radius: 10px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+.card-face {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  backface-visibility: hidden;
+}
+.card-front {
+  background: transparent;
+}
+.history-item-title {
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-align: center;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.card-back {
+  transform: rotateY(180deg);
+  color: #000;
+  font-size: 1rem;
+  font-weight: 200;
+  letter-spacing: 0.08em;
+}
+.card-author {
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+}
+.history-item {
+  cursor: pointer;
+}
+
+/* 過去投稿のカードひっくり返す処理 */
+/* 携帯 */
+@media (hover: none) {
+  .history-item.is-flipped .history-card {
+    transform: rotateY(180deg);
+  }
+}
+
+/* PC用 */
+@media (hover: hover) {
+  .history-item:hover .history-card {
+    transform: rotateY(180deg);
+  }
+}
+
+
+
+
+
+
+
+
+/* 携帯 */
+@media (max-width: 900px) {
+
+  .controls-color::before,
+  .controls-title::before,
+  .controls-name::before {
+    content: '';
+  }
+
+  .editor-layout {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .controls {
+    width: 100%;
+    gap: 20px;
+  }
+
+
+
+  /* 履歴 */
+  .history-list {
+    gap: 10px;
+  }
+  .history-bg {
+    padding-inline: 10px;
+  }
+  .history-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .history-item p {
+    font-size: 0.9rem;
+  }
+  .history-grid {
+    grid-template-columns: repeat(4, 12px);
+    grid-template-rows: repeat(4, 12px);
+    gap: 1px;
+    margin-bottom: 4px;
+  }
+  .history-card {
+    height: 110px;
+    width: 110px;
+  }
+  .history-cell {
+    width: 12px;
+    height: 12px;
+  }
+  .history-list {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1rem;
+  }
+  .history-item-title {
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 400px) {
+  :root {
+    --grid-size: clamp(30px, 21vw, 80px);
+  }
+  #editView {
+    margin-inline: 10px;
+    font-size: 0.6rem;
+  }
+  #editView p {
+    font-size: 1rem;
+  }
+}
