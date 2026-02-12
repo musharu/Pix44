@@ -123,8 +123,8 @@ submitButton.onclick = async () => {
 
 // ここをかえろおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおおお
 // 過去投稿取得用
-// document.addEventListener("DOMContentLoaded", loadHistory);
-document.addEventListener("DOMContentLoaded", loadHistoryFromFile);
+document.addEventListener("DOMContentLoaded", loadHistory);
+// document.addEventListener("DOMContentLoaded", loadHistoryFromFile);
 
 
 const GAS_URL = "https://script.google.com/macros/s/AKfycbwvNO9jkZAdVxhoPqEd-pFYClcNz8S4CfVSCqPer4P5rq6H5PdNlSlYD3d3NYXCHqmPHQ/exec";
