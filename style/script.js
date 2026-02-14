@@ -303,9 +303,9 @@ function createPageButton(text, page) {
         renderHistory_pagination(allPosts, currentPage);
 
         // ページネーションのボタンを押したら、<div id="pagination">まで移動する
-        // document.getElementById("pagination").scrollIntoView({
-        //     behavior: "smooth"
-        // });
+        document.getElementById("pagination").scrollIntoView({
+            behavior: "smooth"
+        });
     };
     return btn;
 }
@@ -344,11 +344,17 @@ function getPostsPerPage() {
 
 // 2.2 windowサイズ変更時にも2.1を対応
 let resizeTimer;
+let lastWidth = window.innerWidth;
 window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);
 
     resizeTimer = setTimeout(() => {
-        renderHistory_pagination(allPosts, 1);
+        const newWidth = window.innerWidth;
+
+        if (newWidth !== lastWidth) {
+            lastWidth = newWidth;
+            renderHistory_pagination(allPosts, currentPage);
+        }
     }, 200);
 });
 
@@ -386,7 +392,6 @@ document.addEventListener("click", (e) => {
         });
     }
 });
-
 
 
 
