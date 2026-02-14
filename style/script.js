@@ -303,9 +303,9 @@ function createPageButton(text, page) {
         renderHistory_pagination(allPosts, currentPage);
 
         // ページネーションのボタンを押したら、<div id="pagination">まで移動する
-        document.getElementById("pagination").scrollIntoView({
-            behavior: "smooth"
-        });
+        // document.getElementById("pagination").scrollIntoView({
+        //     behavior: "smooth"
+        // });
     };
     return btn;
 }
